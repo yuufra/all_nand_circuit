@@ -13,17 +13,17 @@ target = [0,1,1,0] # XOR
 
 
 def enumerate_combinations(n):
-    # 0からn+1までの値を持つリストを生成
-    values = list(range(n + 2))
+    # i番目のNANDはi+2個の選択肢がある(自分より番号の大きいNANDから線を持ってこない)
+    lists = [list(range(i//2+2)) for i in range(2*n)]
     
     # 各要素の組み合わせを列挙
-    combinations = product(values, repeat=2*n)
+    combinations = product(*lists)
     
     for combination in combinations:
         flag = True
         for i in range(n):
-            # 自分より番号の大きいNANDから線を持ってこない、NANDの対称性から候補を減らせる
-            if combination[2*i] >= i+2 or combination[2*i+1] >= i+2 or combination[2*i] > combination[2*i+1]:
+            # NANDの対称性から候補を減らせる
+            if combination[2*i] > combination[2*i+1]:
                 flag = False
                 break
         if flag:
@@ -80,4 +80,5 @@ for gen in enumerate_combinations(n):
     
 # OR,3 には別解があることが確認できた
 # outputは最後以外考えなくてよい　最後以外を使うとそれ以降のNANDが不要になるため
-# 40s -> 10s
+# 40s -> 10s -> 3s
+# O((n+2)^(2n+1))からO(((n+1)!)^2)へ！
