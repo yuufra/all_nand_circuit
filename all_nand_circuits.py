@@ -8,8 +8,8 @@ import sys
 
 
 # 個数と期待する機能
-n = 4
-target = [0,1,1,0] # XOR
+n = 5
+target = [1,0,0,1] # XNOR
 
 
 def enumerate_combinations(n):
@@ -78,7 +78,8 @@ for gen in enumerate_combinations(n):
         print_circuit(gen,n)
 
     
-# OR,3 には別解があることが確認できた
+# OR,3 には別解が1つあることが確認できた
+# XNOR,5 には多数の別解があることが確認できた
 # outputは最後以外考えなくてよい　最後以外を使うとそれ以降のNANDが不要になるため
 # 40s -> 10s -> 3s
 # O((n+2)^(2n+1))からO(((n+1)!)^2)へ！
